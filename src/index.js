@@ -13,5 +13,3 @@ root.render(
     <App />
   </React.StrictMode>
 );
-
-console.log("TEST!!!!");
