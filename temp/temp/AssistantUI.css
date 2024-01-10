@@ -113,6 +113,7 @@
     left: 18px; 
     border-radius: 11px;
     border-width: 0px;
+
 }
 
 .input_box{
@@ -123,16 +124,12 @@
     font-weight: lighter;
     border: transparent;
     border-width: 0px;
-    width: 303px;
-    height: 180px;
+    width: 325px;
+    height: 196px;
     border-radius: 11px;
     overflow-y: scroll;
     overflow-x: hidden;
     resize: none;
-    position: absolute;
-    top: 9px; 
-    left: 14px;
-    outline: none;
 }
 
 ::-webkit-scrollbar {
@@ -168,9 +165,30 @@
 }
 
 
-.response{
-    background-color: transparent;
-    color: white;
+/****************************************LAUNCH BUTTON CSS STYLE SHEET****************************************/
+
+.launch_button_wrapper{
+    background-color: #BE3838;
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    border-width: 2px;
+    border-color: #242424;
+    border-style: solid;
+    top: 90px;
+    left: 90px; 
 }
+
+
+.launch_button{
+    background-color: transparent;
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    border-width: 0px;
+    position: absolute;
+}
+
+
 
 
