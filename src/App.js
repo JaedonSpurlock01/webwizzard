@@ -9,6 +9,7 @@ import { MdOutlineHelpOutline } from "react-icons/md";
 import { IoIosGlobe } from "react-icons/io";
 import { FaHistory } from "react-icons/fa";
 import { GeminiAI } from "./Components/Backend/AssistantAI";
+import { RotatingLines } from "react-loader-spinner";
 
 function App() {
   // The current chat box conversation/history
@@ -16,22 +17,32 @@ function App() {
   const inputBoxRef = useRef(null);
   const chatBoxRef = useRef(null);
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const AI = new GeminiAI();
 
   async function send_message() {
+    if (isLoading) return;
+    setIsLoading(true);
+
     // Grab the text input from the reference
     const user_input = inputBoxRef.current.value;
+
+    setCurrentConversation((currentConversation) => [
+      ...currentConversation,
+      user_input,
+    ]);
 
     await AI.Send(user_input);
 
     // Send user+input to AI
     const response = await AI.Recieve();
 
+    setIsLoading(false);
+
     // Update conversation history
     setCurrentConversation((currentConversation) => [
       ...currentConversation,
-      user_input,
       response,
     ]);
 
@@ -73,8 +84,6 @@ function App() {
 
             <div className="bg-[#242424] w-full h-5/6 translate-y-10 rounded-b-xl" />
 
-            
-
             <div
               className="chat_area absolute w-11/12 h-[15rem] top-10 left-2.5 overflow-y-auto hide-scrollbar hide-scrollbar flex flex-col last:hidden"
               ref={chatBoxRef}
@@ -89,6 +98,16 @@ function App() {
                   </div>
                 );
               })}
+              {isLoading && (
+                <RotatingLines
+                  visible={true}
+                  height="18"
+                  width="18"
+                  strokeColor="grey"
+                  strokeWidth="5"
+                  animationDuration="0.75"
+                />
+              )}
             </div>
 
             <form
