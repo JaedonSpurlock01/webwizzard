@@ -48,7 +48,7 @@ class GeminiAI {
 
 };
 
-class GeminiAI {
+export class GeminiAI {
 
     constructor(safety_config){
         this.__AI_MODEL__ = GOOGLE_AI_MODELS.getGenerativeModel({model: "gemini-pro"});
@@ -77,9 +77,13 @@ class GeminiAI {
         console.log()
     }
 
+    GetHistory(){
+
+    }
+
 }
 
-let AI = new GeminiAI()
+let AI = new GeminiAI(SAFETY_CONFIGURATION)
 
 // AI.Send("How are you today")
 // console.log("AI=> ", AI.Recieve())
