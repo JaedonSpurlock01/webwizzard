@@ -1,12 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import "./App.css";
-
-// K so we will need
-
-// 1. useEffect() to update frontend
-// 2. sendMessage() function
-// 3. conversation variable
-//
 
 function App(props) {
   const position = {
@@ -48,16 +41,18 @@ function App(props) {
       </div>
 
       <div className="chat_area overflow-y-auto hide-scrollbar hide-scrollbar">
-        <ul>
-          {currentConversation.map((current_message) => {
-            return (
-              <>
-                <li>{current_message}</li>
-                <br />
+        {currentConversation.map((current_message) => {
+          if (current_message === currentConversation.at(-1)) {
+            return <p className="message">{current_message}</p>;  
+          } else {
+            return ( // it works now commit it
+              <> 
+                <p className="message">{current_message}</p>
+                <div className="divider"></div>
               </>
             );
-          })}
-        </ul>
+          }
+        })}
       </div>
 
       <div class="input_box_wrapper">
@@ -77,8 +72,6 @@ function App(props) {
           class="send_prompt"
           onClick={send_message}
         >
-          {" "}
-          {/* I see, so then u acceess eveyr property? its the better way of doing document.findById stuff*/}
           Send Prompt
         </button>
       </div>

@@ -154,7 +154,6 @@
 
 /*CHAT AREA*/
 .chat_area{
-    background-color: pink;
     overflow-y: auto;
     overflow-x: hidden;
     width: 325px;
@@ -184,3 +183,16 @@
 }
 
 
+
+/*UTLITY AND TEMPORARY CLASES*****************************/
+
+.message{
+    background-color: transparent;
+    color: white;
+}
+
+.divider{
+    background-color: white;
+    height: 1px;
+    width: 100px;
+}
