@@ -31,45 +31,45 @@ function App(props) {
   }
 
   return (
-    <div class="mainframe" id="AssistantAI" style={position}>
-      <div class="toppanel">
-        <span class="headingmain">
-          <span class="heading1">AI</span>
-          <span class="heading2">CA</span>
-          <span class="heading3">.IO</span>
+    <div className="mainframe" id="AssistantAI" style={position}>
+      <div className="toppanel">
+        <span className="headingmain">
+          <span className="heading1">AI</span>
+          <span className="heading2">CA</span>
+          <span className="heading3">.IO</span>
         </span>
       </div>
 
       <div className="chat_area overflow-y-auto hide-scrollbar hide-scrollbar">
         {currentConversation.map((current_message) => {
-          if (current_message === currentConversation.at(-1)) {
-            return <p className="message">{current_message}</p>;  
+          if (current_message === currentConversation[-1]) {
+            return <p className="message">{current_message}</p>;
           } else {
-            return ( // it works now commit it
+            return (
               <> 
                 <p className="message">{current_message}</p>
                 <div className="divider"></div>
               </>
             );
           }
-        })}
+        })}  
       </div>
 
-      <div class="input_box_wrapper">
+      <div className="input_box_wrapper">
         <textarea
           id="input_box_area"
-          class="input_box"
+          className="input_box"
           row="8"
           cols="5"
           ref={inputBoxRef}
         ></textarea>
       </div>
 
-      <div class="bottompanel">
+      <div className="bottompanel">
         <button
           id="aica_send_button"
           type="button"
-          class="send_prompt"
+          className="send_prompt"
           onClick={send_message}
         >
           Send Prompt
