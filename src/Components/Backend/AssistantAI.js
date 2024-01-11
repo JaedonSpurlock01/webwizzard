@@ -6,7 +6,7 @@ const {GoogleGenerativeAI} = require('@google/generative-ai')
 
 const API_KEY = "AIzaSyD5LFvK9nIg-JJXI_lpVn4zsVNjUPCZz4w";
 const GOOGLE_AI_MODELS = new GoogleGenerativeAI(API_KEY)
-const SAFETY_CONFIGURATION = [
+export const SAFETY_CONFIGURATION = [
       {
         category: HarmCategory.HARM_CATEGORY_HARASSMENT,
         threshold: HarmBlockThreshold.BLOCK_NONE,
@@ -33,20 +33,6 @@ const SAFETY_CONFIGURATION = [
       },
 
 ]
-
-
-class GeminiAI {
-
-    constructor(){
-
-    }
-
-
-    LoadConversations(){
-
-    }
-
-};
 
 export class GeminiAI {
 
@@ -82,8 +68,6 @@ export class GeminiAI {
     }
 
 }
-
-let AI = new GeminiAI(SAFETY_CONFIGURATION)
 
 // AI.Send("How are you today")
 // console.log("AI=> ", AI.Recieve())

@@ -9,6 +9,7 @@ import { MdOutlineHelpOutline } from "react-icons/md";
 import { IoIosGlobe } from "react-icons/io";
 import { FaHistory } from "react-icons/fa";
 import { GeminiAI } from "./Components/Backend/AssistantAI";
+import { SAFETY_CONFIGURATION } from "./Components/Backend/AssistantAI";
 import { RotatingLines } from "react-loader-spinner";
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
-  const AI = new GeminiAI();
+  const AI = new GeminiAI(SAFETY_CONFIGURATION);
 
   async function send_message() {
     if (isLoading) return;
