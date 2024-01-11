@@ -88,7 +88,7 @@ function App() {
               </button>
             </div>
 
-            <div className="bg-[#242424] w-full h-5/6 translate-y-10 rounded-b-xl" />
+            <div className="bg-[#343434] w-full h-5/6 translate-y-10 rounded-b-xl" />
 
             <div
               className="chat_area absolute w-11/12 h-[14rem] top-10 left-2.5 overflow-y-auto hide-scrollbar hide-scrollbar flex flex-col last:hidden"
