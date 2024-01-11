@@ -10,8 +10,8 @@ document.body.appendChild(rootElement);
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <App x="67" y="90"></App>
-   
+    <App></App>
+    
     
   </React.StrictMode>
 );
