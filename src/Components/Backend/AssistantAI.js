@@ -35,7 +35,7 @@ const SAFETY_CONFIGURATION = [
 ]
 
 
-class UserSession{
+class GeminiAI {
 
     constructor(){
 
@@ -79,7 +79,7 @@ class GeminiAI {
 
 }
 
-let AI = new GeminiAI(SAFETY_CONFIGURATION)
+let AI = new GeminiAI()
 
-AI.Send("How are you today")
-console.log("AI=> ", AI.Recieve())
+// AI.Send("How are you today")
+// console.log("AI=> ", AI.Recieve())

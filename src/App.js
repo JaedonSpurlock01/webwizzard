@@ -8,6 +8,8 @@ import { CiSettings } from "react-icons/ci";
 import { MdOutlineHelpOutline } from "react-icons/md";
 import { IoIosGlobe } from "react-icons/io";
 import { FaHistory } from "react-icons/fa";
+import { GeminiAI } from "./Components/Backend/AssistantAI";
+import { RotatingLines } from "react-loader-spinner";
 
 function App() {
   // The current chat box conversation/history
@@ -15,19 +17,32 @@ function App() {
   const inputBoxRef = useRef(null);
   const chatBoxRef = useRef(null);
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  function send_message() {
+  const AI = new GeminiAI();
+
+  async function send_message() {
+    if (isLoading) return;
+    setIsLoading(true);
+
     // Grab the text input from the reference
     const user_input = inputBoxRef.current.value;
 
-    // Send user+input to AI
-    const response =
-      "This is a automated response, please wait for [NaN] minutes for a human response";
-
-    // Update conversation history k dont freak out but this is how
     setCurrentConversation((currentConversation) => [
       ...currentConversation,
       user_input,
+    ]);
+
+    await AI.Send(user_input);
+
+    // Send user+input to AI
+    const response = await AI.Recieve();
+
+    setIsLoading(false);
+
+    // Update conversation history
+    setCurrentConversation((currentConversation) => [
+      ...currentConversation,
       response,
     ]);
 
@@ -69,22 +84,30 @@ function App() {
 
             <div className="bg-[#242424] w-full h-5/6 translate-y-10 rounded-b-xl" />
 
-            <div className="bg-[#121212] rounded-lg absolute translate-x-[5rem] top-1 h-[3rem] w-[5rem] z-10" />
-
             <div
-              className="chat_area absolute w-11/12 h-[15rem] top-10 left-2.5 overflow-y-auto hide-scrollbar hide-scrollbar flex flex-col"
+              className="chat_area absolute w-11/12 h-[15rem] top-10 left-2.5 overflow-y-auto hide-scrollbar hide-scrollbar flex flex-col last:hidden"
               ref={chatBoxRef}
             >
               {currentConversation.map((current_message, index) => {
                 return (
-                  <React.Fragment key={index}>
+                  <div key={index}>
                     <p className="text-neutral-200 mb-2 break-words leading-[25px] text-[11px]">
                       {current_message}
                     </p>
-                    <div className="text-[#505050] h-[2px] w-[300px] mb-2" />
-                  </React.Fragment>
+                    <div className="bg-[#505050] h-[1px] w-[300px] mb-2" />
+                  </div>
                 );
               })}
+              {isLoading && (
+                <RotatingLines
+                  visible={true}
+                  height="18"
+                  width="18"
+                  strokeColor="grey"
+                  strokeWidth="5"
+                  animationDuration="0.75"
+                />
+              )}
             </div>
 
             <form
