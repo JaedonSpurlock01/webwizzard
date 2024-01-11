@@ -167,18 +167,3 @@
     width: 0;
     height: 0;
 }
-
-
-
-/*UTLITY AND TEMPORARY CLASES*****************************/
-
-.message{
-    background-color: transparent;
-    color: white;
-}
-
-.divider{
-    background-color: #505050;
-    height: 1px;
-    width: 300px;
-}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import React from "react";
 import "./App.css";
 
@@ -33,36 +33,7 @@ function App() {
 
     // Clear the input field
     inputBoxRef.current.value = "";
-
-    // Scroll to the bottom of the chat box
-    chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
   }
-
-  function updateChatLayout() {
-    if (chatBoxRef.current) {
-      const chatAreaHeight = chatBoxRef.current.clientHeight;
-      const totalMessagesHeight = Array.from(
-        chatBoxRef.current.children
-      ).reduce((total, child) => total + child.clientHeight, 0);
-
-      if (totalMessagesHeight < chatAreaHeight) {
-        const firstMessage = chatBoxRef.current.children[0];
-        if (firstMessage) {
-          firstMessage.style.marginTop = `${
-            chatAreaHeight - totalMessagesHeight - 12
-          }px`;
-        }
-      } else {
-        Array.from(chatBoxRef.current.children).forEach((child) => {
-          child.style.marginTop = "0px";
-        });
-      }
-    }
-  }
-
-  useEffect(() => {
-    updateChatLayout();
-  }, [currentConversation]);
 
   return (
     <>
@@ -96,7 +67,7 @@ function App() {
               </button>
             </div>
 
-            <div className="bg-[#242424] w-full h-5/6 translate-y-10" />
+            <div className="bg-[#242424] w-full h-5/6 translate-y-10 rounded-b-xl" />
 
             <div className="bg-[#121212] rounded-lg absolute translate-x-[5rem] top-1 h-[3rem] w-[5rem] z-10" />
 
@@ -104,14 +75,14 @@ function App() {
               className="chat_area absolute w-11/12 h-[15rem] top-10 left-2.5 overflow-y-auto hide-scrollbar hide-scrollbar flex flex-col"
               ref={chatBoxRef}
             >
-              {currentConversation.map((current_message) => {
+              {currentConversation.map((current_message, index) => {
                 return (
-                  <>
+                  <React.Fragment key={index}>
                     <p className="text-neutral-200 mb-2 break-words leading-[25px] text-[11px]">
                       {current_message}
                     </p>
-                    <div className="divider mb-2"></div>
-                  </>
+                    <div className="text-[#505050] h-[2px] w-[300px] mb-2" />
+                  </React.Fragment>
                 );
               })}
             </div>
