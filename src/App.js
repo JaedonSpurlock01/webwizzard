@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import "./App.css"
 
 
@@ -21,6 +21,13 @@ function backend_listener(){
 }
 
 
+// K so we will need
+
+// 1. useEffect() to update frontend
+// 2. sendMessage() function
+// 3. conversation variable
+//
+
 function App(props){    
     const position = {
         top: props.x + "px",
@@ -30,6 +37,19 @@ function App(props){
     const[val, setVal] = useState('yes')
 
 
+    // The current chat box conversation/history
+    const [currentConversation, setCurrentConversation] = useState({user: [], ai: []}); 
+    const chatBoxRef = useRef(null);
+
+    
+    // So when currentConversation updates, this function will run
+    // Yes so we will basically re-render the div, lemme bring some of my older ui stuff back to amek this work
+    useEffect(() => {
+      
+    }, [currentConversation])
+  
+
+    //I see, so the array stores all the functions that need to be run? okay I see
     function send_message(){
       //Encrypt the http request with the message from the input box to the server
       
@@ -62,8 +82,27 @@ function App(props){
             </span>
           </div>
           
-          <textarea id="aica_chat_area" readOnly class="chat_area">{val}
-          </textarea>
+          {/* <textarea id="aica_chat_area" readOnly class="chat_area">{val}
+          </textarea> */}
+           
+           {/*  */}
+            {/*not yet okay just npm start? oh wait i would have to pull it then do it locally lol i forgot yeah lemme pull i need read write acecss */}
+          <div className="chat_area overflow-y-auto hide-scrollbar hide-scrollbar">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad did it work? go to localhost:3000 on ur computer
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum
+          dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint following you
+          occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+          mollit anim id est laborum.
+          </div>
 
           <div class="input_box_wrapper"> 
             <textarea id="input_box_area" class="input_box" row="8" cols="5" ></textarea>

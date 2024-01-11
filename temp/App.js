@@ -24,7 +24,7 @@ function App() {
       </div>
       <div className="bg-[#242424] w-full h-5/6 translate-y-10 overflow-y-auto hide-scrollbar">
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do  follow me
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
           aliquip ex ea commodo consequat. Duis aute irure dolor in
