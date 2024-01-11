@@ -42,7 +42,7 @@ function App(props) {
 
       <div className="chat_area overflow-y-auto hide-scrollbar hide-scrollbar">
         {currentConversation.map((current_message) => {
-          if (current_message === currentConversation[-1]) {
+          if (current_message === currentConversation[currentConversation.length - 1]) {
             return <p className="message">{current_message}</p>;
           } else {
             return (
