@@ -85,7 +85,7 @@ function App() {
                     <p className="text-neutral-200 mb-2 break-words leading-[25px] text-[11px]">
                       {current_message}
                     </p>
-                    <div className="text-[#505050] h-[2px] w-[300px] mb-2" />
+                    <div className="bg-[#505050] h-[1px] w-[300px] mb-2" />
                   </React.Fragment>
                 );
               })}
