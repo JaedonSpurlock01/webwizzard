@@ -1,25 +1,5 @@
-import { useEffect, useRef, useState } from "react"
-import "./App.css"
-
-
-function divider(){
-  //Divide the area which indicates user vs AI response
-}
-
-function response_wrapper(response){
-  return(response)
-  //Wrapp the response produced by backend server into a css style and return it
-}
-
-function inject_response(response){
-  //inject the recieved and wrapped response into a specific element by id
-}   
-
-
-function backend_listener(){
-  //Listen to any incoming responses from the backend for the response
-}
-
+import { useEffect, useRef, useState } from "react";
+import "./App.css";
 
 // K so we will need
 
@@ -28,97 +8,82 @@ function backend_listener(){
 // 3. conversation variable
 //
 
-function App(props){    
-    const position = {
-        top: props.x + "px",
-        left: props.y + "px"
-    }
-  
-    const[val, setVal] = useState('yes')
+function App(props) {
+  const position = {
+    top: props.x + "px",
+    left: props.y + "px",
+  };
 
+  // The current chat box conversation/history
+  const [currentConversation, setCurrentConversation] = useState([]);
+  const inputBoxRef = useRef(null);
 
-    // The current chat box conversation/history
-    const [currentConversation, setCurrentConversation] = useState({user: [], ai: []}); 
-    const chatBoxRef = useRef(null);
+  function send_message() {
+    // Grab the text input from the reference
+    const user_input = inputBoxRef.current.value;
 
-    
-    // So when currentConversation updates, this function will run
-    // Yes so we will basically re-render the div, lemme bring some of my older ui stuff back to amek this work
-    useEffect(() => {
-      
-    }, [currentConversation])
-  
+    // Send user+input to AI, for now let's just do a basic response sure but wait
+    const response =
+      "Blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah";
 
-    //I see, so the array stores all the functions that need to be run? okay I see
-    function send_message(){
-      //Encrypt the http request with the message from the input box to the server
-      
+    // Update conversation history k dont freak out but this is how
+    setCurrentConversation((currentConversation) => [
+      ...currentConversation,
+      user_input,
+      response,
+    ]);
 
-      let chat = document.getElementById("aica_chat_area")
-      let inputbx = document.getElementById("input_box_area")
-      
+    // Clear the input field
+    inputBoxRef.current.value = "";
+  }
 
-      if(val === 'yes'){
-        setVal('no')
-      }
-      else if(val === 'no'){
-        setVal('yes')
-      }
+  return (
+    <div class="mainframe" id="AssistantAI" style={position}>
+      <div class="toppanel">
+        <span class="headingmain">
+          <span class="heading1">AI</span>
+          <span class="heading2">CA</span>
+          <span class="heading3">.IO</span>
+        </span>
+      </div>
 
-      console.log(val + "recieved" + " box" + inputbx.innerHTML)
-      chat.innerHTML = inputbx.innerHTML
+      <div className="chat_area overflow-y-auto hide-scrollbar hide-scrollbar">
+        <ul>
+          {currentConversation.map((current_message) => {
+            return (
+              <>
+                <li>{current_message}</li>
+                <br />
+              </>
+            );
+          })}
+        </ul>
+      </div>
 
-    }
+      <div class="input_box_wrapper">
+        <textarea
+          id="input_box_area"
+          class="input_box"
+          row="8"
+          cols="5"
+          ref={inputBoxRef}
+        ></textarea>
+      </div>
 
-
-    return(
-        <div class="mainframe" id="AssistantAI" style={position}>
-
-          <div class="toppanel" >
-            <span class="headingmain">
-              <span class="heading1">AI</span>
-              <span class="heading2">CA</span>
-              <span class="heading3">.IO</span>
-            </span>
-          </div>
-          
-          {/* <textarea id="aica_chat_area" readOnly class="chat_area">{val}
-          </textarea> */}
-           
-           {/*  */}
-            {/*not yet okay just npm start? oh wait i would have to pull it then do it locally lol i forgot yeah lemme pull i need read write acecss */}
-          <div className="chat_area overflow-y-auto hide-scrollbar hide-scrollbar">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad did it work? go to localhost:3000 on ur computer
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum
-          dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint following you
-          occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim id est laborum.
-          </div>
-
-          <div class="input_box_wrapper"> 
-            <textarea id="input_box_area" class="input_box" row="8" cols="5" ></textarea>
-          </div>
-
-          <div class="bottompanel">
-            <button id="aica_send_button" type="button" class="send_prompt" onClick={send_message}>
-              Send Prompt
-            </button>
-          </div>
-
-        </div>
-    )
+      <div class="bottompanel">
+        <button
+          id="aica_send_button"
+          type="button"
+          class="send_prompt"
+          onClick={send_message}
+        >
+          {" "}
+          {/* I see, so then u acceess eveyr property? its the better way of doing document.findById stuff*/}
+          Send Prompt
+        </button>
+      </div>
+    </div>
+  );
 }
 
-
-
-
-export default App; 
+export default App;
