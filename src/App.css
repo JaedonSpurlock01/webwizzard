@@ -1,4 +1,6 @@
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .mainframe{
     width: 370px;
@@ -148,22 +150,6 @@
   /* Customize scrollbar thumb when hovered */
 ::-webkit-scrollbar-thumb:hover {
     background: #555; /* Change the color of the thumb when hovered */
-}
-
-
-
-/*CHAT AREA*/
-.chat_area{
-    overflow-y: auto;
-    overflow-x: hidden;
-    width: 325px;
-    height: 330px;
-    border-radius: 0px;
-    border-width: 0px;
-    top: 54px;
-    left: 19px;
-    outline: none;
-    position: absolute;
 }
 
 

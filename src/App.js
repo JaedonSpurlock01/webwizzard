@@ -1,23 +1,28 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import React from "react";
 import "./App.css";
 
-function App(props) {
-  const position = {
-    top: props.x + "px",
-    left: props.y + "px",
-  };
+import { IoEnterOutline } from "react-icons/io5";
+import { FaPowerOff } from "react-icons/fa6";
+import { CiSettings } from "react-icons/ci";
+import { MdOutlineHelpOutline } from "react-icons/md";
+import { IoIosGlobe } from "react-icons/io";
+import { FaHistory } from "react-icons/fa";
 
+function App() {
   // The current chat box conversation/history
   const [currentConversation, setCurrentConversation] = useState([]);
   const inputBoxRef = useRef(null);
+  const chatBoxRef = useRef(null);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   function send_message() {
     // Grab the text input from the reference
     const user_input = inputBoxRef.current.value;
 
-    // Send user+input to AI, for now let's just do a basic response sure but wait
+    // Send user+input to AI
     const response =
-      "Blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah";
+      "This is a automated response, please wait for [NaN] minutes for a human response";
 
     // Update conversation history k dont freak out but this is how
     setCurrentConversation((currentConversation) => [
@@ -28,54 +33,118 @@ function App(props) {
 
     // Clear the input field
     inputBoxRef.current.value = "";
+
+    // Scroll to the bottom of the chat box
+    chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
   }
 
+  function updateChatLayout() {
+    if (chatBoxRef.current) {
+      const chatAreaHeight = chatBoxRef.current.clientHeight;
+      const totalMessagesHeight = Array.from(
+        chatBoxRef.current.children
+      ).reduce((total, child) => total + child.clientHeight, 0);
+
+      if (totalMessagesHeight < chatAreaHeight) {
+        const firstMessage = chatBoxRef.current.children[0];
+        if (firstMessage) {
+          firstMessage.style.marginTop = `${
+            chatAreaHeight - totalMessagesHeight - 12
+          }px`;
+        }
+      } else {
+        Array.from(chatBoxRef.current.children).forEach((child) => {
+          child.style.marginTop = "0px";
+        });
+      }
+    }
+  }
+
+  useEffect(() => {
+    updateChatLayout();
+  }, [currentConversation]);
+
   return (
-    <div className="mainframe" id="AssistantAI" style={position}>
-      <div className="toppanel">
-        <span className="headingmain">
-          <span className="heading1">AI</span>
-          <span className="heading2">CA</span>
-          <span className="heading3">.IO</span>
-        </span>
-      </div>
-
-      <div className="chat_area overflow-y-auto hide-scrollbar hide-scrollbar">
-        {currentConversation.map((current_message) => {
-          if (current_message === currentConversation[currentConversation.length - 1]) {
-            return <p className="message">{current_message}</p>;
-          } else {
-            return (
-              <> 
-                <p className="message">{current_message}</p>
-                <div className="divider"></div>
-              </>
-            );
-          }
-        })}  
-      </div>
-
-      <div className="input_box_wrapper">
-        <textarea
-          id="input_box_area"
-          className="input_box"
-          row="8"
-          cols="5"
-          ref={inputBoxRef}
-        ></textarea>
-      </div>
-
-      <div className="bottompanel">
+    <>
+      {isCollapsed && (
         <button
-          id="aica_send_button"
-          type="button"
-          className="send_prompt"
-          onClick={send_message}
-        >
-          Send Prompt
-        </button>
-      </div>
-    </div>
+          className="absolute rounded-full w-10 h-10 right-40 top-[15%] bg-neutral-800"
+          onClick={() => {
+            setIsCollapsed(false);
+          }}
+        ></button>
+      )}
+      {!isCollapsed && (
+        <div className="absolute right-40 top-[15%]">
+          <div className="w-[15rem] h-[30rem] bg-[#121212] rounded-lg relative">
+            <div className="flex flex-row text-neutral-400">
+              <IoEnterOutline className="text-xl absolute left-2 translate-y-2" />
+              <span className="absolute translate-x-[6rem] translate-y-2 z-20 font-semibold">
+                <span className="text-white">AI</span>
+                <span className="text-[#BE3838]">CA</span>
+                <span className="text-[#343434]">.IO</span>
+              </span>
+              <button
+                onClick={() => {
+                  setIsCollapsed(true);
+                }}
+              >
+                <span className="absolute text-[0.5rem] right-7 translate-y-[13px]">
+                  Off
+                </span>
+                <FaPowerOff className="right-2 absolute translate-y-3" />
+              </button>
+            </div>
+
+            <div className="bg-[#242424] w-full h-5/6 translate-y-10" />
+
+            <div className="bg-[#121212] rounded-lg absolute translate-x-[5rem] top-1 h-[3rem] w-[5rem] z-10" />
+
+            <div
+              className="chat_area absolute w-11/12 h-[15rem] top-10 left-2.5 overflow-y-auto hide-scrollbar hide-scrollbar flex flex-col"
+              ref={chatBoxRef}
+            >
+              {currentConversation.map((current_message) => {
+                return (
+                  <>
+                    <p className="text-neutral-200 mb-2 break-words leading-[25px] text-[11px]">
+                      {current_message}
+                    </p>
+                    <div className="divider mb-2"></div>
+                  </>
+                );
+              })}
+            </div>
+
+            <form
+              className="absolute w-11/12 h-[8rem] bottom-12 bg-[#181818] rounded-lg ml-[0.6rem]"
+              onSubmit={send_message}
+            >
+              <textarea
+                ref={inputBoxRef}
+                placeholder="Message WebWizzard"
+                type="text"
+                className="h-full w-full text-[11px] bg-transparent focus:outline-none text-neutral-400 m-1 p-1 resize-none"
+                rows="1"
+              />
+            </form>
+
+            <div className="flex flex-row text-neutral-400 absolute bottom-1 items-center justify-center translate-x-1">
+              <CiSettings className="m-2" />
+              <MdOutlineHelpOutline className="m-2" />
+              <button
+                className="rounded-sm bg-rose-600 text-white text-[0.6rem] w-[5rem] text-center p-[1px] m-2 font-medium"
+                onClick={send_message}
+              >
+                Send Prompt
+              </button>
+              <IoIosGlobe className="m-2" />
+              <FaHistory className="m-2" />
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
