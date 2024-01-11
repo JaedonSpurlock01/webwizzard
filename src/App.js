@@ -8,6 +8,7 @@ import { CiSettings } from "react-icons/ci";
 import { MdOutlineHelpOutline } from "react-icons/md";
 import { IoIosGlobe } from "react-icons/io";
 import { FaHistory } from "react-icons/fa";
+import { GeminiAI } from "./Components/Backend/AssistantAI";
 
 function App() {
   // The current chat box conversation/history
@@ -16,15 +17,18 @@ function App() {
   const chatBoxRef = useRef(null);
   const [isCollapsed, setIsCollapsed] = useState(true);
 
-  function send_message() {
+  const AI = new GeminiAI();
+
+  async function send_message() {
     // Grab the text input from the reference
     const user_input = inputBoxRef.current.value;
 
-    // Send user+input to AI
-    const response =
-      "This is a automated response, please wait for [NaN] minutes for a human response";
+    await AI.Send(user_input);
 
-    // Update conversation history k dont freak out but this is how
+    // Send user+input to AI
+    const response = await AI.Recieve();
+
+    // Update conversation history
     setCurrentConversation((currentConversation) => [
       ...currentConversation,
       user_input,

@@ -7,7 +7,7 @@ const API_KEY = "AIzaSyD5LFvK9nIg-JJXI_lpVn4zsVNjUPCZz4w";
 const GOOGLE_AI_MODELS = new GoogleGenerativeAI(API_KEY)
 
 
-class GeminiAI {
+export class GeminiAI {
 
     constructor(){
         this.__AI_MODEL__ = GOOGLE_AI_MODELS.getGenerativeModel({model: "gemini-pro"});
@@ -29,7 +29,8 @@ class GeminiAI {
 
 }
 
-let AI = new GeminiAI()
+//This stuff here is gonna be moved
+// let AI = new GeminiAI()
 
-AI.Send("How are you today")
-console.log("AI=> ", AI.Recieve())
+// AI.Send("How are you today")
+// console.log("AI=> ", AI.Recieve())
