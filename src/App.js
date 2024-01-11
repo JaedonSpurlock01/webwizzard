@@ -73,20 +73,20 @@ function App() {
 
             <div className="bg-[#242424] w-full h-5/6 translate-y-10 rounded-b-xl" />
 
-            <div className="bg-[#121212] rounded-lg absolute translate-x-[5rem] top-1 h-[3rem] w-[5rem] z-10" />
+            
 
             <div
-              className="chat_area absolute w-11/12 h-[15rem] top-10 left-2.5 overflow-y-auto hide-scrollbar hide-scrollbar flex flex-col"
+              className="chat_area absolute w-11/12 h-[15rem] top-10 left-2.5 overflow-y-auto hide-scrollbar hide-scrollbar flex flex-col last:hidden"
               ref={chatBoxRef}
             >
               {currentConversation.map((current_message, index) => {
                 return (
-                  <React.Fragment key={index}>
+                  <div key={index}>
                     <p className="text-neutral-200 mb-2 break-words leading-[25px] text-[11px]">
                       {current_message}
                     </p>
                     <div className="bg-[#505050] h-[1px] w-[300px] mb-2" />
-                  </React.Fragment>
+                  </div>
                 );
               })}
             </div>
