@@ -39,7 +39,7 @@ export class GeminiAI {
     constructor(safety_config){
         this.__AI_MODEL__ = GOOGLE_AI_MODELS.getGenerativeModel({model: "gemini-pro"});
         this.__AI_CONVERSATION_SESSION = this.__AI_MODEL__.startChat()
-   
+      
         this.__response = null
         this.__chat_history = null; //Load the history through the backend
         /*Safety Ratings*/
@@ -47,7 +47,7 @@ export class GeminiAI {
     }
 
     async Send(prompt){
-        const result = await this.__AI_MODEL__.generateContent(prompt);
+        const result = await this.__AI_CONVERSATION_SESSION.sendMessage(prompt);
         const response = await result.response;
         this.__response = response.text();
         console.log("Sent: ", prompt);
@@ -63,8 +63,8 @@ export class GeminiAI {
         console.log()
     }
 
-    GetHistory(){
-
+    GetSessionHistory(){
+        return this.__AI_CONVERSATION_SESSION.getHistory();
     }
 
 }
