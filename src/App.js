@@ -12,6 +12,11 @@ import { GeminiAI } from "./Components/Backend/AssistantAI";
 import { SAFETY_CONFIGURATION } from "./Components/Backend/AssistantAI";
 import { RotatingLines } from "react-loader-spinner";
 
+import { LuThumbsDown } from "react-icons/lu";
+import { LuThumbsUp } from "react-icons/lu";
+import { VscDebugRestart } from "react-icons/vsc";
+
+
 function App() {
   // The current chat box conversation/history
   const [currentConversation, setCurrentConversation] = useState([]);
@@ -83,10 +88,10 @@ function App() {
               </button>
             </div>
 
-            <div className="bg-[#242424] w-full h-5/6 translate-y-10 rounded-b-xl" />
+            <div className="bg-[#343434] w-full h-5/6 translate-y-10 rounded-b-xl" />
 
             <div
-              className="chat_area absolute w-11/12 h-[15rem] top-10 left-2.5 overflow-y-auto hide-scrollbar hide-scrollbar flex flex-col last:hidden"
+              className="chat_area absolute w-11/12 h-[14rem] top-10 left-2.5 overflow-y-auto hide-scrollbar hide-scrollbar flex flex-col last:hidden"
               ref={chatBoxRef}
             >
               {currentConversation.map((current_message, index) => {
@@ -109,6 +114,18 @@ function App() {
                   animationDuration="0.75"
                 />
               )}
+            </div>
+
+            <div className="absolute bottom-[11.5rem] left-3 text-neutral-400 w-[90%] flex">
+              <button className="mr-2">
+                <LuThumbsUp />
+              </button>
+              <button className="mr-auto">
+                <LuThumbsDown />
+              </button>
+              <button className="right-0">
+                <VscDebugRestart />
+              </button>
             </div>
 
             <form
