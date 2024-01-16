@@ -21,7 +21,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   const AI = new GeminiAI(SAFETY_CONFIGURATION);
-
+  
   async function send_message() {
     if (isLoading) return;
     setIsLoading(true);

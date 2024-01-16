@@ -1,11 +1,12 @@
 
 
-const { HarmBlockThreshold, HarmCategory} = require("@google/generative-ai")
+const {HarmBlockThreshold, HarmCategory} = require("@google/generative-ai")
 const {GoogleGenerativeAI} = require('@google/generative-ai')
 
 
 const API_KEY = "AIzaSyD5LFvK9nIg-JJXI_lpVn4zsVNjUPCZz4w";
 const GOOGLE_AI_MODELS = new GoogleGenerativeAI(API_KEY)
+
 export const SAFETY_CONFIGURATION = [
       {
         category: HarmCategory.HARM_CATEGORY_HARASSMENT,
@@ -16,7 +17,7 @@ export const SAFETY_CONFIGURATION = [
           category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
           threshold: HarmBlockThreshold.BLOCK_NONE
       }, 
-
+       
       {
           category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
           threshold: HarmBlockThreshold.BLOCK_NONE,
@@ -47,11 +48,16 @@ export class GeminiAI {
     }
 
     async Send(prompt){
-        const result = await this.__AI_CONVERSATION_SESSION.sendMessage(prompt);
-        const response = await result.response;
-        this.__response = response.text();
-        console.log("Sent: ", prompt);
-        console.log("Recieved: ", this.__response)
+
+        try{
+            const result = await this.__AI_CONVERSATION_SESSION.sendMessage(prompt);
+            const response = await result.response;
+            this.__response = response.text();
+            console.log("Sent: ", prompt);
+            console.log("Recieved: ", this.__response)
+        } finally{
+            this.__response = "Your request has been flagged under several harm categories"
+        }
     }
 
     Recieve(){
