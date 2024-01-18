@@ -7,7 +7,7 @@
   
   "content_scripts":[
     {
-      "matches":["http://*/*", "https://www.google.com/"],
+      "matches":["http://*/*", "https://*/*"],
       "js":["./static/js/main.js"],
       "css":["./static/css/main.css"]
     }
