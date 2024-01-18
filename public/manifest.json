@@ -8,7 +8,8 @@
   "content_scripts":[
     {
       "matches":["http://*/*", "https://www.google.com/"],
-      "js":["./static/js/main.js"]
+      "js":["./static/js/main.js"],
+      "css":["./static/css/main.css"]
     }
   ]
 }
