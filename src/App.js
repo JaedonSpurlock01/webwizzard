@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import React from "react";
 import "./App.css";
 
-import { IoEnterOutline } from "react-icons/io5";
 import { FaPowerOff } from "react-icons/fa6";
 import { CiSettings } from "react-icons/ci";
 import { MdOutlineHelpOutline } from "react-icons/md";
@@ -12,12 +11,9 @@ import { GeminiAI } from "./Components/Backend/AssistantAI";
 import { SAFETY_CONFIGURATION } from "./Components/Backend/AssistantAI";
 import { RotatingLines } from "react-loader-spinner";
 
-import { LuThumbsDown } from "react-icons/lu";
-import { LuThumbsUp } from "react-icons/lu";
 import { VscDebugRestart } from "react-icons/vsc";
 
-const WebScrapper = require("./Components/Backend/Scrapper.js").WebScrapper
-
+const WebScrapper = require("./Components/Backend/Scrapper.js").WebScrapper;
 
 function App() {
   // The current chat box conversation/history
@@ -26,41 +22,58 @@ function App() {
   const chatBoxRef = useRef(null);
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-   
+  const [previousPrompt, setPreviousPrompt] = useState("");
+  const [isRestartClicked, setIsRestartClicked] = useState(false);
 
   //scrape the website using scrapper. Reads the website to generate the data
   const scrapper = new WebScrapper();
   scrapper.read();
 
   const AI = new GeminiAI(SAFETY_CONFIGURATION);
-  
+
   async function send_message() {
     if (isLoading) return;
     setIsLoading(true);
 
+    let user_input, response;
+
     // Grab the text input from the reference
-    const user_input = inputBoxRef.current.value;
+    if (isRestartClicked) {
+      if (previousPrompt !== "") {
+        user_input = previousPrompt;
+      }
+    } else {
+      user_input = inputBoxRef.current.value;
+    }
 
-    setCurrentConversation((currentConversation) => [
-      ...currentConversation,
-      user_input,
-    ]);
+    if (user_input.length < 3) {
+      setCurrentConversation(() => [
+        ...currentConversation,
+        "Please enter a valid prompt",
+      ]);
+    } else {
+      setCurrentConversation((currentConversation) => [
+        ...currentConversation,
+        user_input,
+      ]);
 
-    await AI.Send(user_input);
-    
-    // Send user+input to AI
-    const response = await AI.Recieve();
+      await AI.Send(user_input);
+
+      // Send user+input to AI
+      response = await AI.Recieve();
+      // Update conversation history
+      setCurrentConversation((currentConversation) => [
+        ...currentConversation,
+        response,
+      ]);
+    }
 
     setIsLoading(false);
 
-    // Update conversation history
-    setCurrentConversation((currentConversation) => [
-      ...currentConversation,
-      response,
-    ]);
-
     // Clear the input field
     inputBoxRef.current.value = "";
+    setPreviousPrompt(user_input);
+    setIsRestartClicked(false);
   }
 
   return (
@@ -70,7 +83,6 @@ function App() {
           className="ww-absolute ww-rounded-full ww-w-10 ww-h-10 ww-right-40 ww-top-[15%] ww-bg-neutral-800"
           onClick={() => {
             setIsCollapsed(false);
-            
           }}
         ></button>
       )}
@@ -78,7 +90,6 @@ function App() {
         <div className="ww-absolute ww-right-40 ww-top-[15%]">
           <div className="ww-w-[15rem] ww-h-[30rem] ww-bg-[#121212] ww-rounded-lg ww-relative">
             <div className="ww-flex ww-flex-row ww-text-neutral-400">
-              <IoEnterOutline className="ww-text-xl ww-absolute ww-left-2 ww-translate-y-2" />
               <span className="ww-absolute ww-translate-x-[6rem] ww-translate-y-2 ww-z-20 ww-font-semibold">
                 <span className="ww-text-white">AI</span>
                 <span className="ww-text-[#BE3838]">CA</span>
@@ -87,7 +98,6 @@ function App() {
               <button
                 onClick={() => {
                   setIsCollapsed(true);
-                  
                 }}
               >
                 <span className="ww-absolute ww-text-[0.5rem] ww-right-7 ww-translate-y-[13px]">
@@ -99,44 +109,46 @@ function App() {
 
             <div className="ww-bg-[#343434] ww-w-full ww-h-5/6 ww-translate-y-10 ww-rounded-b-xl" />
 
-            <div
-              className="ww-chat_area ww-absolute ww-w-11/12 ww-h-[14rem] ww-top-10 ww-left-2.5 ww-overflow-y-auto ww-hide-scrollbar ww-hide-scrollbar ww-flex ww-flex-col ww-last:hidden"
-              ref={chatBoxRef}
-            >
-              {currentConversation.map((current_message, index) => {
-                return (
-                  <div key={index}>
-                    <p className="ww-text-neutral-200 ww-mb-2 ww-break-words ww-leading-[25px] ww-text-[11px]">
-                      {current_message}
-                    </p>
-                    <div className="ww-bg-[#505050] ww-h-[1px] ww-w-[300px] ww-mb-2" />
-                  </div>
-                );
-              })}
+            <div className="ww-absolute ww-w-11/12 ww-h-[14rem] ww-top-12 ww-left-2">
+              <div
+                className="ww-w-full ww-h-full ww-overflow-y-auto ww-hide-scrollbar ww-flex ww-flex-col"
+                ref={chatBoxRef}
+              >
+                {currentConversation.map((current_message, index) => {
+                  return (
+                    <div key={index}>
+                      <p className="ww-text-neutral-200 ww-mb-2 ww-break-words ww-leading-[25px] ww-text-[11px]">
+                        {current_message}
+                      </p>
+                      <div className="ww-bg-[#505050] ww-h-[1px] ww-w-[95%] ww-mb-2" />
+                    </div>
+                  );
+                })}
+              </div>
               {isLoading && (
-                <RotatingLines
-                  visible={true}
-                  height="18"
-                  width="18"
-                  strokeColor="grey"
-                  strokeWidth="5"
-                  animationDuration="0.75"
-                />
+                <div className="ww-ml-2 ww-mt-2">
+                  <RotatingLines
+                    visible={true}
+                    height="18"
+                    width="18"
+                    strokeColor="grey"
+                    strokeWidth="5"
+                    animationDuration="0.75"
+                  />
+                </div>
               )}
             </div>
 
-            <div className="ww-absolute ww-bottom-[11.5rem] ww-left-3 ww-text-neutral-400 ww-w-[90%] ww-flex">
-              <button className="ww-mr-2">
-                <LuThumbsUp />
-              </button>
-              <button className="ww-mr-auto">
-                <LuThumbsDown />
-              </button>
-              <button className="ww-right-0">
+            <div className="ww-absolute ww-bottom-[11.5rem] ww-right-4 ww-text-neutral-400 ww-flex">
+              <button
+                onClick={() => {
+                  setIsRestartClicked(true);
+                  send_message();
+                }}
+              >
                 <VscDebugRestart />
               </button>
             </div>
-
             <form
               className="ww-absolute ww-w-11/12 ww-h-[8rem] ww-bottom-12 ww-bg-[#181818] ww-rounded-lg ww-ml-[0.6rem]"
               onSubmit={send_message}
@@ -145,14 +157,14 @@ function App() {
                 ref={inputBoxRef}
                 placeholder="Message WebWizzard"
                 type="text"
-                className="ww-h-full ww-w-full ww-text-[11px] ww-bg-transparent ww-focus:outline-none ww-text-neutral-400 ww-m-1 ww-p-1 ww-resize-none"
+                className="ww-h-full ww-w-full ww-text-[11px] ww-bg-transparent focus:ww-outline-none ww-text-neutral-400 ww-m-1 ww-p-1 ww-resize-none"
                 rows="1"
               />
             </form>
 
             <div className="ww-flex ww-flex-row ww-text-neutral-400 ww-absolute ww-bottom-1 ww-items-center ww-justify-center ww-translate-x-1">
               <CiSettings className="ww-m-2" />
-              <MdOutlineHelpOutline className="m-2" />
+              <MdOutlineHelpOutline className="ww-m-2" />
               <button
                 className="ww-rounded-sm ww-bg-rose-600 ww-text-white ww-text-[0.6rem] ww-w-[5rem] ww-text-center ww-p-[1px] ww-m-2 ww-font-medium"
                 onClick={send_message}
@@ -168,5 +180,4 @@ function App() {
     </>
   );
 }
-
 export default App;
