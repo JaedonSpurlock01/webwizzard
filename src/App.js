@@ -16,7 +16,6 @@ import { LuThumbsDown } from "react-icons/lu";
 import { LuThumbsUp } from "react-icons/lu";
 import { VscDebugRestart } from "react-icons/vsc";
 
-
 function App() {
   // The current chat box conversation/history
   const [currentConversation, setCurrentConversation] = useState([]);
@@ -26,7 +25,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   const AI = new GeminiAI(SAFETY_CONFIGURATION);
-  
+
   async function send_message() {
     if (isLoading) return;
     setIsLoading(true);
@@ -70,7 +69,6 @@ function App() {
         <div className="ww-absolute ww-right-40 ww-top-[15%]">
           <div className="ww-w-[15rem] ww-h-[30rem] ww-bg-[#121212] ww-rounded-lg ww-relative">
             <div className="ww-flex ww-flex-row ww-text-neutral-400">
-              <IoEnterOutline className="ww-text-xl ww-absolute ww-left-2 ww-translate-y-2" />
               <span className="ww-absolute ww-translate-x-[6rem] ww-translate-y-2 ww-z-20 ww-font-semibold">
                 <span className="ww-text-white">AI</span>
                 <span className="ww-text-[#BE3838]">CA</span>
@@ -91,7 +89,7 @@ function App() {
             <div className="ww-bg-[#343434] ww-w-full ww-h-5/6 ww-translate-y-10 ww-rounded-b-xl" />
 
             <div
-              className="ww-chat_area ww-absolute ww-w-11/12 ww-h-[14rem] ww-top-10 ww-left-2.5 ww-overflow-y-auto ww-hide-scrollbar ww-hide-scrollbar ww-flex ww-flex-col ww-last:hidden"
+              className="ww-absolute ww-w-11/12 ww-h-[14rem] ww-top-10 ww-left-2.5 ww-overflow-y-auto ww-hide-scrollbar ww-hide-scrollbar ww-flex ww-flex-col last:ww-hidden"
               ref={chatBoxRef}
             >
               {currentConversation.map((current_message, index) => {
@@ -116,14 +114,8 @@ function App() {
               )}
             </div>
 
-            <div className="ww-absolute ww-bottom-[11.5rem] ww-left-3 ww-text-neutral-400 ww-w-[90%] ww-flex">
-              <button className="ww-mr-2">
-                <LuThumbsUp />
-              </button>
-              <button className="ww-mr-auto">
-                <LuThumbsDown />
-              </button>
-              <button className="ww-right-0">
+            <div className="ww-absolute ww-bottom-[11.5rem] ww-right-4 ww-text-neutral-400 ww-flex">
+              <button>
                 <VscDebugRestart />
               </button>
             </div>
@@ -136,7 +128,7 @@ function App() {
                 ref={inputBoxRef}
                 placeholder="Message WebWizzard"
                 type="text"
-                className="ww-h-full ww-w-full ww-text-[11px] ww-bg-transparent ww-focus:outline-none ww-text-neutral-400 ww-m-1 ww-p-1 ww-resize-none"
+                className="ww-h-full ww-w-full ww-text-[11px] ww-bg-transparent focus:ww-outline-none ww-text-neutral-400 ww-m-1 ww-p-1 ww-resize-none"
                 rows="1"
               />
             </form>
