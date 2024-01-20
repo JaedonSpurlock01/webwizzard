@@ -1,3 +1,4 @@
+const { MdTungsten } = require("react-icons/md");
 
 function Collector(tagName){
     
@@ -18,6 +19,7 @@ class Chunk{
 
     constructor(text, tag){
         this._text = text;
+        console.log("ATTENTION::::", typeof this._text)   //BUG HERE, idk if this is a string or not
         this._length = this._text.length;
         this._size_limit = 3000;
         this._tag = ""

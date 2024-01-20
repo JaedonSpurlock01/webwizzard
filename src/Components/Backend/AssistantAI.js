@@ -57,10 +57,12 @@ class AIDataTrainer{
         let response = "";
         let prompt = "please memorize this chunk of webpage information and don't print anything in response"
 
+        //BUG HERE, It says quota exceeded or something need to figure this out as well. 
         //Training A.I with paragraph elements
         for(let i = 0; i < this.__KNOWLEDGE[0].length - 1; i++){
-            response = this.__AI_INSTANCE.sendMessage(prompt + this.__KNOWLEDGE[0][i].ToText())
+            response = this.__AI_INSTANCE.sendMessage(prompt + this.__KNOWLEDGE[0][i].Slice(0, 30).ToText())
             console.log("[TRAINING ELEMENT]: ", this.__KNOWLEDGE[0][i].ToText(), "Response from AI: ", response)
+            setTimeout(()=>{}, 1300)
         }
 
         response = this.__AI_INSTANCE.sendMessage("code 8 is my secret. let me know when I ask")
