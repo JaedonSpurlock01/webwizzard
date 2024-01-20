@@ -54,8 +54,8 @@ class WebScrapper{
     }
 
     read(){
-        this.__data.p_elements = scrape('p')
-        this.__data.h_elements = scrape('h')
+        this.__P_ELEM = scrape('p')
+        this.__H_ELEM = scrape('h')
     }
 
     __print_elements(array, elem_name){

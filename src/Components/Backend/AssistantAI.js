@@ -48,17 +48,21 @@ class AIDataTrainer{
     __training__(){
 
     }
+
+    
     LoadKnowledge(){
 
     }
 
     InitiateTraining(){
-
+        this.__training__();
     }
 
     RegisterInstance(instance){
         this.__AI_INSTANCE = instance;
     }
+
+
 }   
 
 export class GeminiAI {
@@ -71,9 +75,10 @@ export class GeminiAI {
         this.__chat_history = null; //Load the history through the backend
         this.__safety_settings = safety_config; 
         
-        this.__KNOWLEDGE = []
 
+        this.__KNOWLEDGE = []
         this.AI_TRAINER = new AIDataTrainer()
+
         this.AI_TRAINER.RegisterInstance(this.__AI_CONVERSATION_SESSION)
         this.AI_TRAINER.LoadKnowledge(this.__KNOWLEDGE)
         this.InitiateTraining()
