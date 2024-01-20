@@ -16,6 +16,8 @@ import { LuThumbsDown } from "react-icons/lu";
 import { LuThumbsUp } from "react-icons/lu";
 import { VscDebugRestart } from "react-icons/vsc";
 
+const scrapper = require("./Components/Backend/Scrapper.js")
+
 
 function App() {
   // The current chat box conversation/history
@@ -24,7 +26,10 @@ function App() {
   const chatBoxRef = useRef(null);
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+   
 
+  //scrape the website using scrapper
+  scrapper.scrape('p')
   const AI = new GeminiAI(SAFETY_CONFIGURATION);
   
   async function send_message() {
@@ -40,7 +45,7 @@ function App() {
     ]);
 
     await AI.Send(user_input);
-
+    
     // Send user+input to AI
     const response = await AI.Recieve();
 
@@ -63,6 +68,7 @@ function App() {
           className="ww-absolute ww-rounded-full ww-w-10 ww-h-10 ww-right-40 ww-top-[15%] ww-bg-neutral-800"
           onClick={() => {
             setIsCollapsed(false);
+            
           }}
         ></button>
       )}
@@ -79,6 +85,7 @@ function App() {
               <button
                 onClick={() => {
                   setIsCollapsed(true);
+                  scrapper.scrape('p');
                 }}
               >
                 <span className="ww-absolute ww-text-[0.5rem] ww-right-7 ww-translate-y-[13px]">
