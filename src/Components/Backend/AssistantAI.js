@@ -3,9 +3,9 @@
 const {HarmBlockThreshold, HarmCategory} = require("@google/generative-ai")
 const {GoogleGenerativeAI} = require('@google/generative-ai')
 
-
 const API_KEY = "AIzaSyD5LFvK9nIg-JJXI_lpVn4zsVNjUPCZz4w";
 const GOOGLE_AI_MODELS = new GoogleGenerativeAI(API_KEY)
+
 
 export const SAFETY_CONFIGURATION = [
       {
@@ -49,7 +49,7 @@ class AIDataTrainer{
 
     }
 
-    
+
     LoadKnowledge(){
 
     }
@@ -81,7 +81,7 @@ export class GeminiAI {
 
         this.AI_TRAINER.RegisterInstance(this.__AI_CONVERSATION_SESSION)
         this.AI_TRAINER.LoadKnowledge(this.__KNOWLEDGE)
-        this.InitiateTraining()
+        this.AI_TRAINER.InitiateTraining()
 
     }
 

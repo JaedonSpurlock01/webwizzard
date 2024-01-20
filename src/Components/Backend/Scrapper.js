@@ -75,7 +75,7 @@ class WebScrapper{
         }
     }
 
-    print_all(tagName){
+    print_all(){
         this.print('p')
         this.print('h')
     }
