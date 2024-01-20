@@ -85,7 +85,7 @@ function App() {
               <button
                 onClick={() => {
                   setIsCollapsed(true);
-                  scrapper.scrape('p');
+                  
                 }}
               >
                 <span className="ww-absolute ww-text-[0.5rem] ww-right-7 ww-translate-y-[13px]">
