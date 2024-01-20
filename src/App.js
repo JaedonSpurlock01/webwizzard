@@ -29,7 +29,7 @@ function App() {
    
 
   //scrape the website using scrapper
-  scrapper.scrape('p')
+  
   const AI = new GeminiAI(SAFETY_CONFIGURATION);
   
   async function send_message() {
