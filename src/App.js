@@ -13,7 +13,7 @@ import { RotatingLines } from "react-loader-spinner";
 
 import { VscDebugRestart } from "react-icons/vsc";
 
-const WebScrapper = require("./Components/Backend/Scrapper.js").WebScrapper;
+const WebScrapper = require("./Components/Backend/WebScrapper.js").WebScrapper;
 
 function App() {
   // The current chat box conversation/history
@@ -26,10 +26,15 @@ function App() {
   const [isRestartClicked, setIsRestartClicked] = useState(false);
 
   //scrape the website using scrapper. Reads the website to generate the data
-  const scrapper = new WebScrapper();
-  scrapper.read();
+  //const scrapper = new WebScrapper();
+  //scrapper.CollectData();
+  //scrapper.PrintElementsOfTag('p');
 
   const AI = new GeminiAI(SAFETY_CONFIGURATION);
+  
+  AI.ExtractData()
+  AI.LoadKnowledge()
+  AI.Train()
 
   async function send_message() {
     if (isLoading) return;

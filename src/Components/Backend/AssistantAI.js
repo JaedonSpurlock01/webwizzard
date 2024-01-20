@@ -2,6 +2,8 @@
 
 const {HarmBlockThreshold, HarmCategory} = require("@google/generative-ai")
 const {GoogleGenerativeAI} = require('@google/generative-ai')
+const WebScrapper = require("./WebScrapper.js").WebScrapper
+
 
 const API_KEY = "AIzaSyD5LFvK9nIg-JJXI_lpVn4zsVNjUPCZz4w";
 const GOOGLE_AI_MODELS = new GoogleGenerativeAI(API_KEY)
@@ -36,22 +38,36 @@ export const SAFETY_CONFIGURATION = [
 ]
 
 
+
+
+
 class AIDataTrainer{
 
     constructor(){
         this.__AI_INSTANCE = null; 
-        this.__knowledge = {
-
-        }
+        this.__KNOWLEDGE = null; 
+        this.__max_token_limit = 30720; 
+        this.__cutoff_limit = 25720; 
     }
 
     __training__(){
+        
+        let token_limit = 3000; 
+        let char_limit = token_limit*4; 
+        let response = "";
+        let prompt = "please memorize this chunk of webpage information and don't print anything in response"
 
-    }
+        //Training A.I with paragraph elements
+        for(let i = 0; i < this.__KNOWLEDGE[0].length - 1; i++){
+            response = this.__AI_INSTANCE.sendMessage(prompt + this.__KNOWLEDGE[0][i].ToText())
+            console.log("[TRAINING ELEMENT]: ", this.__KNOWLEDGE[0][i].ToText(), "Response from AI: ", response)
+        }
 
+        response = this.__AI_INSTANCE.sendMessage("code 8 is my secret. let me know when I ask")
+    }       
 
-    LoadKnowledge(){
-
+    LoadKnowledge(knowledge){
+        this.__KNOWLEDGE = knowledge;  
     }
 
     InitiateTraining(){
@@ -65,6 +81,7 @@ class AIDataTrainer{
 
 }   
 
+
 export class GeminiAI {
 
     constructor(safety_config){
@@ -75,14 +92,15 @@ export class GeminiAI {
         this.__chat_history = null; //Load the history through the backend
         this.__safety_settings = safety_config; 
         
-
-        this.__KNOWLEDGE = []
+        this.WebScrapper = new WebScrapper();
         this.AI_TRAINER = new AIDataTrainer()
 
-        this.AI_TRAINER.RegisterInstance(this.__AI_CONVERSATION_SESSION)
-        this.AI_TRAINER.LoadKnowledge(this.__KNOWLEDGE)
-        this.AI_TRAINER.InitiateTraining()
+       
+        this.__KNOWLEDGE = []
+      
 
+        this.AI_TRAINER.RegisterInstance(this.__AI_CONVERSATION_SESSION)
+       
     }
 
     async Send(prompt){
@@ -110,6 +128,21 @@ export class GeminiAI {
     GetSessionHistory(){
         return this.__AI_CONVERSATION_SESSION.getHistory();
     }
+
+    ExtractData(){
+        this.WebScrapper.CollectData();
+    }
+
+    LoadKnowledge(){ 
+        this.AI_TRAINER.LoadKnowledge(this.__KNOWLEDGE)
+        this.__KNOWLEDGE.push(this.WebScrapper.getElementsByTagName('p'))
+        this.__KNOWLEDGE.push(this.WebScrapper.getElementsByTagName('h'));
+    }
+
+    Train(){
+        this.AI_TRAINER.InitiateTraining();
+    }
+
 
 }
 

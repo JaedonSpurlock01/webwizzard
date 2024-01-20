@@ -5,13 +5,13 @@ function scrape(tagName){
 
     let elements = [];
 
-    let limit = 3600; 
+    let limit = 3000; //This will be the text len of everything in the array
     let total_size = 0; 
     let len = 0; 
 
     for(let i = 0; i < ps.length -1; i++){
 
-        if(total_size >= 3600){
+        if(total_size >= limit){
             return elements; 
         }
         elements.push(ps.item(i))
@@ -23,30 +23,7 @@ function scrape(tagName){
 }
 
 
-
-class DataObject{
-
-    constructor(){
-        this.__element_name = "some_element"
-        this.__array = []
-    }
-
-    print(){
-
-    }
-
-    get_array(){
-
-    }
-
-    read(){
-
-    }
-}
-
-
 class WebScrapper{
-
 
     constructor(){
         this.__P_ELEM = [];
@@ -88,6 +65,10 @@ class WebScrapper{
 
         if(tagName === 'h'){
             return this.__H_ELEM;
+        }
+
+        else{
+            return null; 
         }
     }
 
