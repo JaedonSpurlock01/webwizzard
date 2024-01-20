@@ -16,7 +16,7 @@ import { LuThumbsDown } from "react-icons/lu";
 import { LuThumbsUp } from "react-icons/lu";
 import { VscDebugRestart } from "react-icons/vsc";
 
-const scrapper = require("./Components/Backend/Scrapper.js")
+const WebScrapper = require("./Components/Backend/Scrapper.js").WebScrapper
 
 
 function App() {
@@ -28,8 +28,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
    
 
-  //scrape the website using scrapper
-  
+  //scrape the website using scrapper. Reads the website to generate the data
+  const scrapper = new WebScrapper();
+  scrapper.read();
+
   const AI = new GeminiAI(SAFETY_CONFIGURATION);
   
   async function send_message() {

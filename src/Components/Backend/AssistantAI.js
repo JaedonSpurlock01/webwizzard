@@ -35,6 +35,32 @@ export const SAFETY_CONFIGURATION = [
 
 ]
 
+
+class AIDataTrainer{
+
+    constructor(){
+        this.__AI_INSTANCE = null; 
+        this.__knowledge = {
+
+        }
+    }
+
+    __training__(){
+
+    }
+    LoadKnowledge(){
+
+    }
+
+    InitiateTraining(){
+
+    }
+
+    RegisterInstance(instance){
+        this.__AI_INSTANCE = instance;
+    }
+}   
+
 export class GeminiAI {
 
     constructor(safety_config){
@@ -43,8 +69,15 @@ export class GeminiAI {
       
         this.__response = null
         this.__chat_history = null; //Load the history through the backend
-        /*Safety Ratings*/
         this.__safety_settings = safety_config; 
+        
+        this.__KNOWLEDGE = []
+
+        this.AI_TRAINER = new AIDataTrainer()
+        this.AI_TRAINER.RegisterInstance(this.__AI_CONVERSATION_SESSION)
+        this.AI_TRAINER.LoadKnowledge(this.__KNOWLEDGE)
+        this.InitiateTraining()
+
     }
 
     async Send(prompt){
