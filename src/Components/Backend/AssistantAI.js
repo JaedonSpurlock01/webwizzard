@@ -55,7 +55,7 @@ export class GeminiAI {
             this.__response = response.text();
             console.log("Sent: ", prompt);
             console.log("Recieved: ", this.__response)
-        } finally{
+        } catch(error){
             this.__response = "Your request has been flagged under several harm categories"
         }
     }
