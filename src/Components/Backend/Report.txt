@@ -1,0 +1,24 @@
+BUG 1: document.getElementsByTagName() command isn't reading page of page but UI itself. 
+    FIX: Not sure, need to figure out what to do about it. 
+
+BUG 2: everytime the send button is clicked it's reloading the entire element causing AI instance to be re created. 
+    FIX: Need to seperate out Element Based UI from the AI instance itself. 
+         UI should be prompting the AI instance in background meaning new script needs to be created.
+         
+
+DESIGN PROBLEM 1: Super slow data processing for AI (prompt based Training)
+    Since there's a limit of 60 Requester/minute each api call is limited one call/sec. To process all the chunks it will take atleast 1-2 minutes. 
+
+    POSSIBLE FIX: We merge chunks till  max character limit of single api/second which is around 3000. 
+                  This will make it easy in short term but not a feasible option in long term for meaningful effect. 
+                  
+                  CASE: 10,000 character threshold
+                  THEN:
+                        10000/3000 = 3.3
+                        
+                        3000 char worth of chunks per second would take 3.3 seconds to process 10000 character page. 
+
+
+
+
+    

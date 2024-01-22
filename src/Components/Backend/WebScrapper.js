@@ -1,28 +1,21 @@
-const { MdTungsten } = require("react-icons/md");
-
-function Collector(tagName){
-    
-    const elements = document.getElementsByTagName(tagName)
-   
-    let chunks = [];
-
-    for(let i = 0; i < elements.length - 1; i++){
-        chunks.push(new Chunk(elements.item(i)));
-        chunks[i].Print();
-    }
-
-    return chunks; 
-}
-
 
 class Chunk{
 
     constructor(text, tag){
-        this._text = text;
-        console.log("ATTENTION::::", typeof this._text)   //BUG HERE, idk if this is a string or not
+        this._text = text;  
         this._length = this._text.length;
         this._size_limit = 3000;
         this._tag = ""
+        
+    }
+
+    __filter__(){
+
+        if(this._text === "" || this._text === null){
+            return; 
+        }
+
+        this._text = this._text.slice(this._text.indexOf('>')+1, this._text.indexOf('<'))
     }
 
     Slice(index1, index2){
@@ -35,9 +28,11 @@ class Chunk{
         return this; 
     }
 
+
     ToText(){
         return this._text;
     }
+
 
     Fill(data){
 
@@ -63,7 +58,7 @@ class Chunk{
     }
 
     Print(){
-        console.log("\nYAA", this._text, "\n");
+        console.log("\nnew CHUNK(): ", this._text, "\n")
         return this; 
     }
 
@@ -72,7 +67,7 @@ class Chunk{
     }
 
     MergeWith(chunk){
-        this.Fill(chunk.ToText())
+        this.Fill(this.ToText() + chunk.ToText())
         return this; 
     }
 
@@ -96,17 +91,23 @@ class WebScrapper{
     }
 
     __COLLECT__(tagName){
-        const elements = document.getElementsByTagName(tagName)
+        var elements = document.getElementsByTagName(tagName)
         
-        let elem_string = "";
-
+        //IMP ROOT BUG REPORT: the above line somehow isn't actually reading the actual page. It is simply reading the UI itself. 
+        //That is why when you prompt it, the chunks show up. However the it crashes since the for below is acessing 'null' values. 
+        console.log("__COLLECT__ status", "elements[] len: ", elements.length)
         let chunks = [];
 
-        for(let i = 0; i < elements.length - 1; i++){
-            chunks.push(new Chunk(elements.item(i), tagName));
+        for(let i = 0; i < elements.length; i++){
+            chunks.push(new Chunk(elements[i].textContent, tagName));
             chunks[i].Print();
         }
 
+        //Safety Warning....
+        if(chunks.length == 0){
+            console.log("PROBLEM RAISED: 0 chunks were created since 0 elements were present for tag", tagName)
+            console.log("                This means that AI would have no DATA available for training")
+        }
         return chunks; 
     }
 
@@ -114,7 +115,6 @@ class WebScrapper{
         this.P_ELEMS = this.__COLLECT__('p')
         this.H_ELEMS = this.__COLLECT__('h')
     }
-
 
     getElementsByTagName(tag){
 
@@ -130,13 +130,12 @@ class WebScrapper{
     PrintElementsOfArray(array, name){
 
         console.log("Array:- ", name)
-        for(let i = 0; i < array.length - 1; i++){
+        for(let i = 0; i < array.length; i++){
             console.log(array[i].Print(), "\n")
         }
 
         console.log("______End of ", name, "_______")
     }
-
 
     PrintElementsOfTag(tag){
 

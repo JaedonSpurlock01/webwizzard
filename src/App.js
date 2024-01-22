@@ -27,8 +27,8 @@ function App() {
 
   //scrape the website using scrapper. Reads the website to generate the data
   //const scrapper = new WebScrapper();
-  //scrapper.CollectData();
-  //scrapper.PrintElementsOfTag('p');
+  //scrapper.CollectData()
+  
 
   const AI = new GeminiAI(SAFETY_CONFIGURATION);
   
