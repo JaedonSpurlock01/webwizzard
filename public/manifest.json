@@ -3,7 +3,14 @@
   "name": "AICA",
   "description": "Artificial Intelligence Course Assistant",
   "version": "1.0",
-  "permissions": ["activeTab"],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "webNavigation",
+    "webRequest",
+    "scripting"
+  ],
   
   "content_scripts":[
     {

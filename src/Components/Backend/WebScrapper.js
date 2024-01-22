@@ -5,7 +5,7 @@ class Chunk{
         this._text = text;  
         this._length = this._text.length;
         this._size_limit = 3000;
-        this._tag = ""
+        this._tag = tag
         
     }
 
@@ -36,7 +36,7 @@ class Chunk{
 
     Fill(data){
 
-         //Slice the data at index 400 and store that
+         //Slice the data at index 3000 and store that
         if(data.length > this._size_limit){
             this._text = data.slice(0, this._size_limit)
             this._max_length = this._text.length;
@@ -58,7 +58,7 @@ class Chunk{
     }
 
     Print(){
-        console.log("\nnew CHUNK(): ", this._text, "\n")
+        console.log("\nnew CHUNK('",this._tag, "'): ", this._text, "\n")
         return this; 
     }
 
@@ -66,7 +66,7 @@ class Chunk{
         return (this._length <= 0)
     }
 
-    MergeWith(chunk){
+    CombineWith(chunk){
         this.Fill(this.ToText() + chunk.ToText())
         return this; 
     }

@@ -1,9 +1,11 @@
 BUG 1: document.getElementsByTagName() command isn't reading page of page but UI itself. 
     FIX: Not sure, need to figure out what to do about it. 
 
+
+[SOLVED 1/21/2024 6:46 PM]
 BUG 2: everytime the send button is clicked it's reloading the entire element causing AI instance to be re created. 
-    FIX: Need to seperate out Element Based UI from the AI instance itself. 
-         UI should be prompting the AI instance in background meaning new script needs to be created.
+       
+    
          
 
 DESIGN PROBLEM 1: Super slow data processing for AI (prompt based Training)
@@ -21,4 +23,8 @@ DESIGN PROBLEM 1: Super slow data processing for AI (prompt based Training)
 
 
 
+IDEA 1: 
+    Identify each element with the textContent property as opposes to Identifying general elements by tag or class name which 
+    contain the text. Traverse the DOM and search for every element that has a text or innerHTML property. 
+    
     

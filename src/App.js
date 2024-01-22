@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useMemo } from "react";
 import React from "react";
 import "./App.css";
 
@@ -13,7 +13,6 @@ import { RotatingLines } from "react-loader-spinner";
 
 import { VscDebugRestart } from "react-icons/vsc";
 
-const WebScrapper = require("./Components/Backend/WebScrapper.js").WebScrapper;
 
 function App() {
   // The current chat box conversation/history
@@ -30,12 +29,20 @@ function App() {
   //scrapper.CollectData()
   
 
-  const AI = new GeminiAI(SAFETY_CONFIGURATION);
-  
-  AI.ExtractData()
-  AI.LoadKnowledge()
-  AI.Train()
+  //const AI = new GeminiAI(SAFETY_CONFIGURATION);
 
+  const AI = useMemo(
+    () =>{
+      var ai =  new GeminiAI(SAFETY_CONFIGURATION)
+      ai.ExtractData()
+      ai.LoadKnowledge()
+      ai.Train()
+
+      return ai
+    },
+    [SAFETY_CONFIGURATION]
+  )
+  
   async function send_message() {
     if (isLoading) return;
     setIsLoading(true);
