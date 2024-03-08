@@ -8,7 +8,7 @@ class Chunk{
         this._tag = tag
         
     }
-
+    
     __filter__(){
 
         if(this._text === "" || this._text === null){

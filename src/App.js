@@ -8,6 +8,7 @@ import { MdOutlineHelpOutline } from "react-icons/md";
 import { IoIosGlobe } from "react-icons/io";
 import { FaHistory } from "react-icons/fa";
 import { GeminiAI } from "./Components/Backend/AssistantAI";
+import { QuizBot} from "./Components/Backend/QuizBot";
 import { SAFETY_CONFIGURATION } from "./Components/Backend/AssistantAI";
 import { RotatingLines } from "react-loader-spinner";
 

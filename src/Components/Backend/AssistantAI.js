@@ -1,5 +1,4 @@
 
-
 const {HarmBlockThreshold, HarmCategory} = require("@google/generative-ai")
 const {GoogleGenerativeAI} = require('@google/generative-ai')
 const WebScrapper = require("./WebScrapper.js").WebScrapper
@@ -121,6 +120,7 @@ class AIDataTrainer{
 
 
 }   
+
 
 export class GeminiAI {
 
