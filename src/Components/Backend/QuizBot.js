@@ -1,4 +1,4 @@
-
+/*
 class AnswerButton{
 
     constructor(root){
@@ -61,6 +61,7 @@ class Prompt{
     question(action){
         if(action === 'search'){
             //Can also call selenium or some script that parses quizlet
+            var question = ""
             question = this._root_element.getElementsByClassName("problemTypes")
             this._question = question.getAttribute("innerHTML")
         }
@@ -90,9 +91,10 @@ class QuizBot{
         this._prompts = []
         this.array = ["itemTakeNavLink_1", "itemTakeNavLink_2", "itemTakeNavLink_3", "itemTakeNavLink_4", "itemTakeNavLink_5", "itemTakeNavLink_6", "itemTakeNavLink_7"];
         
-        /*for(let i = 1; i <= que_nums; i++){
-            this._prompts.push(new Prompt(array[i]))
-        }*/
+        //for(let i = 1; i <= que_nums; i++){
+        //    this._prompts.push(new Prompt(array[i]))
+        //}
+
         this._prompts.push(new Prompt("itemTakeNavLink_1"))
         this._prompts.push(new Prompt("itemTakeNavLink_2"))
         this._prompts.push(new Prompt("itemTakeNavLink_3"))
@@ -106,6 +108,4 @@ class QuizBot{
         }
     }
 }
-
-bot = new QuizBot(10);
-bot.run();
+*/

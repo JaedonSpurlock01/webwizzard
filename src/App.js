@@ -7,9 +7,9 @@ import { CiSettings } from "react-icons/ci";
 import { MdOutlineHelpOutline } from "react-icons/md";
 import { IoIosGlobe } from "react-icons/io";
 import { FaHistory } from "react-icons/fa";
-import { GeminiAI } from "./Components/Backend/AssistantAI";
-import { QuizBot} from "./Components/Backend/QuizBot";
-import { SAFETY_CONFIGURATION } from "./Components/Backend/AssistantAI";
+import { GeminiAI } from "./Components/Backend/AssistantAI2";
+//import { QuizBot} from "./Components/Backend/QuizBot";
+import { SAFETY_CONFIGURATION } from "./Components/Backend/AssistantAI2";
 import { RotatingLines } from "react-loader-spinner";
 
 import { VscDebugRestart } from "react-icons/vsc";
@@ -73,7 +73,7 @@ function App() {
       await AI.Send(user_input);
 
       // Send user+input to AI
-      response = await AI.Recieve();
+      response = AI.Recieve();
       // Update conversation history
       setCurrentConversation((currentConversation) => [
         ...currentConversation,
