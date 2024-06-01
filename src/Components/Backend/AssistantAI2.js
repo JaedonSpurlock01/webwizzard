@@ -12,7 +12,7 @@ export class GeminiAI {
 
     async Send(prompt){
         var data = {'User':prompt};
-        var url = "http://localhost:80/chat"
+        var url = "http://38.56.129.131:8888/chat"
 
         try {
             const response = await fetch(url, {
